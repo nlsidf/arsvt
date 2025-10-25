@@ -1,0 +1,9 @@
+[package]
+name = "ascii_raycast_3d"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ratatui = "0.29"
+crossterm = "0.27"
+rand = "0.8"
