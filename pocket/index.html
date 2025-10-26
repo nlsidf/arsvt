@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCII Raycast 3D Maze</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #eee;
+            font-family: 'Segoe UI', 'Courier New', monospace;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            width: 100vw;
+            height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+        #gameContainer {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        #mainCanvas {
+            display: block;
+            background: #000;
+            border: 3px solid #4a5568;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+            width: 100%;
+            height: 100%;
+            image-rendering: auto;
+            cursor: grab;
+        }
+        #mainCanvas:active {
+            cursor: grabbing;
+        }
+        #minimap {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            border: 3px solid #64748b;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.7);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+        }
+        #hud {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 14px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 2px solid #4a5568;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+            line-height: 1.6;
+        }
+        #hud div {
+            display: flex;
+            gap: 10px;
+        }
+        #hud span {
+            color: #60a5fa;
+            font-weight: bold;
+            min-width: 45px;
+            text-align: right;
+        }
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-end;
+        }
+        #joystickContainer {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border: 3px solid #475569;
+            border-radius: 50%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), inset 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        #joystick {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+            border: 3px solid #1e40af;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5), inset 0 2px 6px rgba(255, 255, 255, 0.3);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: grab;
+            transition: all 0.1s ease;
+            touch-action: none;
+        }
+        #joystick:active {
+            cursor: grabbing;
+            background: radial-gradient(circle, #3b82f6 0%, #2563eb 50%, #1e40af 100%);
+        }
+        #joystickOverlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        #joystickOverlay::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            height: 60%;
+            background: rgba(71, 85, 105, 0.4);
+            transform: translate(-50%, -50%);
+        }
+        #joystickOverlay::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 60%;
+            height: 2px;
+            background: rgba(71, 85, 105, 0.4);
+            transform: translate(-50%, -50%);
+        }
+        #actionControls {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .btn-action {
+            background: linear-gradient(145deg, #1e40af, #1e3a8a);
+            border: 2px solid #3b82f6;
+            color: #cbd5e1;
+            min-width: 90px;
+            height: 45px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.15s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+        .btn-action:hover {
+            background: linear-gradient(145deg, #2563eb, #1e40af);
+            border-color: #60a5fa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+        }
+        .btn-action:active {
+            background: linear-gradient(145deg, #1e3a8a, #1e293b);
+            transform: translateY(0);
+        }
+        #instructions {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            font-size: 11px;
+            text-align: left;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 2px solid #4a5568;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+            line-height: 1.5;
+            color: #cbd5e1;
+            max-width: 200px;
+        }
+        #title {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 28px;
+            font-weight: bold;
+            color: #f1f5f9;
+            text-shadow: 0 0 20px rgba(96, 165, 250, 0.5);
+            letter-spacing: 2px;
+        }
+        @media (max-width: 768px) {
+            #minimap {
+                top: 10px;
+                right: 10px;
+            }
+            #hud {
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+            #joystickContainer {
+                width: 120px;
+                height: 120px;
+            }
+            #joystick {
+                width: 50px;
+                height: 50px;
+            }
+            .btn-action {
+                min-width: 75px;
+                height: 40px;
+                font-size: 12px;
+            }
+            #instructions {
+                font-size: 10px;
+                padding: 8px 12px;
+                max-width: 160px;
+            }
+            #title {
+                font-size: 20px;
+                top: -40px;
+            }
+        }
+        @media (max-height: 600px) {
+            #title {
+                display: none;
+            }
+            #instructions {
+                font-size: 9px;
+                padding: 6px 10px;
+            }
+            #joystickContainer {
+                width: 100px;
+                height: 100px;
+            }
+            #joystick {
+                width: 45px;
+                height: 45px;
+            }
+        }
+        @media (max-width: 480px) {
+            #hud {
+                font-size: 10px;
+                padding: 6px 10px;
+            }
+            #joystickContainer {
+                width: 100px;
+                height: 100px;
+            }
+            #joystick {
+                width: 45px;
+                height: 45px;
+            }
+            .btn-action {
+                min-width: 65px;
+                height: 38px;
+                font-size: 11px;
+            }
+            #controls {
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="title">🏛️ 3D MAZE</div>
+        <canvas id="mainCanvas"></canvas>
+        <canvas id="minimap"></canvas>
+        
+        <div id="hud">
+            <div>FPS: <span id="fps">60</span></div>
+            <div>Health: <span id="health">100</span>%</div>
+            <div>Coins: <span id="coins">0</span>/8</div>
+            <div>Keys: <span id="keys">0</span>/2</div>
+            <div>Steps: <span id="steps">0</span></div>
+        </div>
+        
+        <div id="controls">
+            <div id="joystickContainer">
+                <div id="joystickOverlay"></div>
+                <div id="joystick"></div>
+            </div>
+            <div id="actionControls">
+                <button class="btn-action" id="btnReset">🔄 Reset</button>
+                <button class="btn-action" id="btnNewMaze">🎲 New</button>
+            </div>
+        </div>
+        
+        <div id="instructions">
+            <strong>Keyboard:</strong><br>
+            WASD/Arrows: Move<br>
+            ←/→: Rotate view<br>
+            R: Reset | N: New<br>
+            <strong>Touch/Mouse:</strong><br>
+            Joystick: Move around<br>
+            Drag screen: Rotate view
+        </div>
+    </div>
+    
+    <script src="game.js"></script>
+</body>
+</html>
