@@ -1,6 +1,6 @@
 [package]
-name = "ascii_raycast_3d"
-version = "0.1.0"
+name = "arsvt3d"
+version = "0.1.6"
 edition = "2021"
 
 [dependencies]
