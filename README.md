@@ -4,6 +4,7 @@
 使用了ratrtui库和crossterm库，实现跨平台架构运行，使用rand库的随机算法生成迷宫确保新奇感的体验//
 
 
+
 添加了可以在墙壁移动的npc：“T^T”和“（^_^）”//
 
 
@@ -14,6 +15,9 @@
 
 
 推荐在linux环境或win10/11下运行（powershell版本大于等于7）//
+
+
+或者使用tty web这类webterminal工具将其放到浏览器中使用，更加灵活//
 
 
 下载仓库后cargo run --release 运行//
