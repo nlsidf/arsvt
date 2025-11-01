@@ -23,6 +23,9 @@
 下载仓库后cargo run --release 运行//
 
 
+或者直接使用cargo install --git https://gitee.com/nlsidf/arsvt.git/
+
+
 或者打开pocjet文件夹中的html文件（非本项目核心）体验在浏览器中效果//
 
 
