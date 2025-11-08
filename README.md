@@ -81,6 +81,7 @@ esc键退出程序//
 
 就到这里吧，感谢使用与分享//
 
+![图片](https://github.com/nlsidf/arsvt/blob/main/photos/%E6%B8%B8%E6%88%8F%E6%88%AA%E5%9B%BE.png)
 
 yanzicheng //
 
