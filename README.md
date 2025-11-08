@@ -1,8 +1,14 @@
+ａｒｓｖｔ３ｄ
+
+![图片](https://github.com/nlsidf/arsvt/blob/main/photos/游戏截图3.png)
+
 这份rust代码是伪3d渲染迷宫，应用ASCII字符画风格和tui技术，在保证效果的基础上尽可能节约资源//
 
 
 使用了ratrtui库和crossterm库，实现跨平台架构运行，使用rand库的随机算法生成迷宫确保新奇感的体验//
 
+
+在services文件夹是我用rust重构的ttyd项目的程序，同样使用了xterm.js，可以将本tui程序到浏览器中运行，但这个services（ttyd-rust）程序目前只支持linux版本部署//
 
 
 添加了可以在墙壁移动的npc：“T^T”和“（^_^）”//
@@ -10,6 +16,7 @@
 
 以及墙壁上的菱形符号//
 
+![图片](https://github.com/nlsidf/arsvt/blob/main/photos/游戏截图2.png)
 
 游戏中没有设置迷宫终点，请尽情探索//
 
@@ -34,6 +41,7 @@
 
 还有在termux上编译的适用于Android arm64的版本//
 
+![图](https://github.com/nlsidf/arsvt/blob/main/photos/arsvt3d.png)
 
 移动：wasd或箭头↑↓或屏幕按钮//
 
