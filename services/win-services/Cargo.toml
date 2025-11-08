@@ -1,0 +1,52 @@
+[package]
+name = "ttyd-rust"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.35", features = ["full"] }
+axum = { version = "0.7", features = ["ws"] }
+tower = "0.4"
+tower-http = { version = "0.5", features = ["fs", "trace", "cors"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+clap = { version = "4.4", features = ["derive"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+anyhow = "1.0"
+thiserror = "1.0"
+futures = "0.3"
+bytes = "1.5"
+base64 = "0.21"
+rust-embed = "8.0"
+mime_guess = "2.0"
+
+[target.'cfg(unix)'.dependencies]
+nix = { version = "0.27", features = ["process", "signal", "term", "ioctl", "fs"] }
+libc = "0.2"
+hostname = "0.3"
+tokio-fd = "0.3"
+
+[target.'cfg(windows)'.dependencies]
+hostname = "0.3"
+vt100 = "0.15"
+windows = { version = "0.52", features = [
+    "Win32_System_Console",
+    "Win32_Foundation",
+    "Win32_Security",
+    "Win32_System_Threading",
+    "Win32_System_Pipes",
+    "Win32_Storage_FileSystem",
+    "Win32_System_IO",
+    "Win32_System_SystemServices",
+    "Win32_System_ProcessStatus",
+] }
+
+[dev-dependencies]
+tokio-test = "0.4"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
