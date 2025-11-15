@@ -1,0 +1,48 @@
+name: Build Rust Project
+
+on:
+  push:
+    branches: [ main, master ]  # 代码推送到这些分支时触发
+  pull_request:
+    branches: [ main, master ]  # 针对这些分支创建PR时触发
+  workflow_dispatch:            # 允许在GitHub页面上手动触发工作流
+
+env:
+  CARGO_TERM_COLOR: always     # 让Cargo输出带颜色，方便查看日志
+
+jobs:
+  build:
+    name: Build - ${{ matrix.target }} (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        # 定义目标平台和对应的运行环境
+        include:
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+          - target: aarch64-unknown-linux-gnu
+            os: ubuntu-latest
+          - target: x86_64-apple-darwin
+            os: macos-latest
+          - target: aarch64-apple-darwin
+            os: macos-latest
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install Rust toolchain
+      uses: actions-rust-lang/setup-rust-toolchain@v1
+      with:
+        target: ${{ matrix.target }}  # 安装指定目标的工具链，以支持交叉编译
+
+    - name: Build release binary
+      run: cargo build --release --target ${{ matrix.target }}
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: arsvt3d-${{ matrix.target }}
+        path: target/${{ matrix.target }}/release/arsvt3d${{ matrix.target == 'x86_64-pc-windows-msvc' && '.exe' || '' }}
