@@ -1,0 +1,63 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*' # 推送类似 v1.0.0, v0.1.8 的标签时触发工作流
+
+# 为 Release 操作赋予写权限
+permissions:
+  contents: write
+
+jobs:
+  # 1. 创建 GitHub Release 草稿
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Create GitHub Release
+        uses: taiki-e/create-gh-release-action@v1
+        id: create_release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  # 2. 在多平台上构建并上传二进制文件
+  upload-assets:
+    name: Upload Assets - ${{ matrix.target }} (${{ matrix.os }})
+    needs: create-release
+    strategy:
+      matrix:
+        include:
+          # Linux (64位)
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+          # Linux (ARM64)
+          - target: aarch64-unknown-linux-gnu
+            os: ubuntu-latest
+          # macOS (Intel)
+          - target: x86_64-apple-darwin
+            os: macos-latest
+          # macOS (Apple Silicon)
+          - target: aarch64-apple-darwin
+            os: macos-latest
+          # Windows (64位)
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Build and Upload Rust Binary
+        uses: taiki-e/upload-rust-binary-action@v1
+        with:
+          # 使用您的项目名称 arsvt3d
+          bin: arsvt3d
+          target: ${{ matrix.target }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
