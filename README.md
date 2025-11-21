@@ -2,6 +2,8 @@
 
 在线demo：https://sage-pithivier-29c3c8.netlify.app/
 
+快速本地体验：'npm install arsvt3d && arsvt3d'
+
 ![图片](https://github.com/nlsidf/arsvt/blob/main/photos/游戏截图3.png)
 
 这份rust代码是伪3d渲染迷宫，应用ASCII字符画风格和tui技术，在保证效果的基础上尽可能节约资源//
