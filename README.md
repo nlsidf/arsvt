@@ -1,6 +1,8 @@
 ａｒｓｖｔ３ｄ
 
 在线demo：https://arsvt3d.netlify.app/
+         https://nlsidf.github.io/arsvt3d-web-demo/
+         https://nlsidf.github.io/arsvt3d-introduction/
 
 快速本地体验：'npm install arsvt3d && arsvt3d'
 
