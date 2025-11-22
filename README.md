@@ -1,6 +1,8 @@
 ａｒｓｖｔ３ｄ
 
-在线demo：https://arsvt3d.netlify.app/
+github pages在线demo：https://nlsidf.github.io/arsvt3d-web-demo/
+
+cloudflare pages在线demo: https://lglfr.dpdns.org/
 
          https://nlsidf.github.io/arsvt3d-web-demo/
 
