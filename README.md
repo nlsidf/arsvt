@@ -1,6 +1,6 @@
 ａｒｓｖｔ３ｄ
 
-```主在线游戏界面：``` https://nlsidf.github.io/arsvt-docker/
+```主在线游戏界面：``` https://nlsidf.github.io/arsvt3d-docker/
 
 介绍宣传界面：https://i.lglfr.dpdns.org/
 
