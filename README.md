@@ -1,5 +1,7 @@
 ａｒｓｖｔ３ｄ
 
+```主宣传界面：``` https://nlsidf.github.io/arsvt-docker/
+
 介绍宣传界面：https://i.lglfr.dpdns.org/
 
 github pages在线demo：https://nlsidf.github.io/arsvt3d-web-demo/
