@@ -107,11 +107,8 @@ yanzicheng //
 
 lglfr-nlsidf//
 
-<iframe 
-    id="myIframe"
-    src="https://lglfr.dpdns.org/" 
-    width="100%" 
-    style="border: none; min-height: 400px;">
-</iframe>
+[main-game-deployed](https://b.lglfr.dpdns.org/)
+
+[fork-game-deployed](https://nlsidf.github.io/arsvt3d-docker/)
 
 [web-demo](https://lglfr.dpdns.org)
