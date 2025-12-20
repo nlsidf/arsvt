@@ -107,7 +107,9 @@ yanzicheng //
 
 lglfr-nlsidf//
 
-[hf.co-spaces-deploy](https://lglfr-nowss.hf.space/)
+[smooth-nice-deployed](https://nlsidf.github.io/fuzzy-invention/)
+
+[hf.co-spaces-deployed](https://lglfr-nowss.hf.space/)
 
 [main-game-deployed](https://b.lglfr.dpdns.org/)
 
