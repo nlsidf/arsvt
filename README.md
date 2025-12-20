@@ -107,6 +107,8 @@ yanzicheng //
 
 lglfr-nlsidf//
 
+[hf.co-spaces-deploy](https://lglfr-nowss.hf.space/)
+
 [main-game-deployed](https://b.lglfr.dpdns.org/)
 
 [fork-game-deployed](https://nlsidf.github.io/arsvt3d-docker/)
