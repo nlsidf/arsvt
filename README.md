@@ -2,6 +2,8 @@
 
 ``主在线游戏界面：`` https://nlsidf.github.io/arsvt3d-docker/
 
+``Zeabur托管：·· https//c.lglfr.dpdns.org/
+
 ``Railway托管：`` https://b.lglfr.dpdns.org/
 
 ``Clawcloud托管：`` https://a.lglfr.dpdns.org/
